@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+@layer components {
+  /* ================================= Header Area ================================== */
+  .header {
+    @apply bg-black py-4 text-white;
+  }
+  .nav {
+    @apply flex justify-between items-center gap-4;
+  }
+
+  .nav__menu {
+    @apply flex justify-between items-center gap-20;
+  }
+  .nav__logo {
+    @apply flex items-center gap-2;
+  }
+  .nav__logo img {
+    @apply w-12 h-12;
+  }
+
+  .nav__logo h3 {
+    @apply text-3xl font-bold;
+  }
+
+
+  .nav__list {
+    @apply flex items-center gap-6;
+  }
+
+  .nav__list .nav__item {
+    @apply text-xl font-medium;
+  }
+
+  .header__search {
+    @apply  px-6 py-2 flex items-center rounded-md text-white bg-transparent border-2 border-gray-50;
+  }
+
+  .header__search input {
+    @apply w-full focus:outline-none;
+  }
+
+  /* ================================= Header Area ================================== */
+}
