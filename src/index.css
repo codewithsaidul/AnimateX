@@ -18,11 +18,10 @@
   .nav__logo img {
     @apply w-12 h-12;
   }
-
+  
   .nav__logo h3 {
     @apply text-3xl font-bold;
   }
-
 
   .nav__list {
     @apply flex items-center gap-6;

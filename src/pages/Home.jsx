@@ -1,8 +1,13 @@
+import Fetured from "../components/Home/Fetured"
+import Hero from "../components/Home/Hero"
 
 
 const Home = () => {
   return (
-    <div className="text-6xl text-red-800">Home</div>
+    <div className="">
+      <Hero />
+      <Fetured />
+    </div>
   )
 }
 
