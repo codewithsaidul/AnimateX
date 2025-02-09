@@ -1,9 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@600;700&display=swap');
+
 @import "tailwindcss";
+
+
+
+
+@theme {
+  --font-title: "Poppins", "sans-serif";
+  --font-normal: "Inter", "sans-serif";
+  --breakpoint-3xl: 1920px;
+  --color-primary: #0077b6;
+  --color-deepBlack: #121212;
+  --color-normalText: #e0e0e0;
+  --shadow-primary: rgba(0, 119, 182, 0.3);
+  --shadow-deepShadow: rgba(0, 0, 0, 0.8);
+  --shadow-lift: rgba(255, 255, 255, 0.1);
+
+  /* ... */
+}
+
 
 @layer components {
   /* ================================= Header Area ================================== */
   .header {
-    @apply bg-black py-4 text-white;
+    @apply bg-deepBlack py-4 text-white shadow-lift fixed top-0 left-0 right-0 z-50;
   }
   .nav {
     @apply flex justify-between items-center gap-4;
@@ -39,5 +59,21 @@
     @apply w-full focus:outline-none;
   }
 
+
+
   /* ================================= Header Area ================================== */
+
+
+  .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: -6px !important;
+    z-index: 20 !important;
+  }
+
+
+  .swiper-pagination-bullet {
+    background: #fff !important;
+    opacity: 1 !important;
+  }
+
+
 }
