@@ -34,7 +34,6 @@ const Hero = () => {
     },
   });
 
-  console.log(animes)
 
   if (isLoading) return <div>Loading....</div>;
 
@@ -77,11 +76,18 @@ const Hero = () => {
                 className={`w-full h-96 rounded-xl shadow-lg transition-transform transform}`}
               />
             </div>
-            <div className="absolute bottom-0 left-0 w-full h-16 px-4 py-2">
-             <h1 className="text-primary font-bold text-5xl"> {anime.title}</h1>
+            <div className="absolute bottom-8 left-0 w-full h-16 px-4 py-2">
+             <h1 className="hero__title"> {anime.title}</h1>
             </div>
 
-            <div className="featured__overlay"></div> 
+
+
+            <div className="absolute bottom-0 right-0 bg-primary z-50 px-4 py-1">
+              <p className="text-xl font-bold text-white">Movie</p>
+            </div>
+
+            <div className="hero__overlay"></div>
+             
           </SwiperSlide>
         ))}
       </Swiper>

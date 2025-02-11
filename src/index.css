@@ -21,6 +21,9 @@
 }
 
 
+
+
+
 @layer components {
   /* ================================= Header Area ================================== */
   .header {
@@ -65,6 +68,18 @@
   /* ================================= Header Area ================================== */
 
 
+
+  /* ================================= Hero Component ================================== */
+
+
+  .hero__overlay {
+    @apply absolute top-0 left-0 right-0 bottom-0 bg-black/40
+  }
+
+  .hero__title {
+    @apply text-white font-bold text-2xl z-50 absolute top-0 left-0 right-0 bg-black/40 py-3
+  }
+
   .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
     bottom: -6px !important;
     z-index: 20 !important;
@@ -79,6 +94,12 @@
 
 
   /* =========================== Featured Component ====================================== */
+
+
+  .featured__navigation {
+    @apply flex items-center gap-2 text-sm text-white;
+  }
+
 
   .featured__img {
     @apply w-full h-64 object-cover
@@ -102,3 +123,5 @@
 
 
 }
+
+

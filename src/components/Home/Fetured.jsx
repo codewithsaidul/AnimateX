@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
-import { Autoplay } from "swiper/modules";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const Fetured = () => {
@@ -21,13 +22,25 @@ const Fetured = () => {
 
   return (
     <div className="my-10 px-6">
-      <h2 className="text-3xl text-primary font-bold mb-5">Fetured</h2>
+      <div className="flex justify-between items-center">
+        {" "}
+        <h2 className="text-3xl text-primary font-bold mb-5">Fetured</h2>
+        <div className="featured__navigation">
+          <div className="custom-prev">
+            <IoIosArrowBack size={24} />
+          </div>
+          <div className="custom-next">
+            <IoIosArrowForward size={24} />
+          </div>
+        </div>
+      </div>
 
       {/* ====================== fetred container ============================ */}
       <Swiper
         spaceBetween={20}
         centeredSlides={false}
         loop={true}
+        // loopAdditionalSlides= {1}
         autoplay={{
           delay: 3500,
           disableOnInteraction: false,
@@ -35,19 +48,23 @@ const Fetured = () => {
         breakpoints={{
           640: {
             slidesPerView: 3,
-            slidesPerGroup: 3,
+            // slidesPerGroup: 3,
           },
           768: {
             slidesPerView: 4,
-            slidesPerGroup: 4,
+            // slidesPerGroup: 4,
           },
           1024: {
             slidesPerView: 6,
-            slidesPerGroup: 6,
+            // slidesPerGroup: 6,
           },
         }}
+        navigation={{
+          nextEl: ".custom-next",
+          prevEl: ".custom-prev",
+        }}
         // pagination={true}
-        modules={[Autoplay]}
+        modules={[Autoplay, Navigation]}
         // onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className="mySwiper"
       >
@@ -61,10 +78,13 @@ const Fetured = () => {
               />
             </div>
             <div className="text-white">
-              <h3 className="featured__title">{movie.title.substring(0, 16)}...</h3>
-              <p className="text-sm text-normalText">{movie.release_date.substring(0, 4)}</p>
+              <h3 className="featured__title">
+                {movie.title.substring(0, 16)}...
+              </h3>
+              <p className="text-sm text-normalText">
+                {movie.release_date.substring(0, 4)}
+              </p>
             </div>
-
 
             <div className="absolute top-0 right-0 bg-primary  px-4 py-1">
               <p className="text-xl font-bold text-white">Featured</p>
@@ -72,7 +92,9 @@ const Fetured = () => {
 
             <div className="featured__rating bg-gradient-to-r from-primary to-secondary">
               <p className="text-white flex items-center gap-2">
-                <span className="text-yellow-300"><FaStar size={16} /></span>
+                <span className="text-yellow-300">
+                  <FaStar size={16} />
+                </span>
                 {movie.vote_average.toFixed(1)}
               </p>
             </div>
