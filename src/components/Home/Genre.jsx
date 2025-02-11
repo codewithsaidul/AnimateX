@@ -23,7 +23,7 @@ const Genre = () => {
 if (isLoading) return <div>Loading....</div>;
 
   return (
-    <div className='mt-12 px-6'>
+    <div className='mt-12'>
       <h3 className='category__heading'>Categories</h3>
       <ul className='category__list'>
         {genres.map(genre => (

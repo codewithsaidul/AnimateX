@@ -77,7 +77,7 @@
   }
 
   .hero__title {
-    @apply text-white font-bold text-2xl z-50 absolute top-0 left-0 right-0 bg-black/40 py-3
+    @apply text-white font-bold text-xl z-50 absolute top-0 left-0 right-0 bg-black/40 py-3
   }
 
   .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
@@ -128,8 +128,10 @@
 
 /* ================================ Sidebar ================================= */
 
-.category__heading {
-  @apply text-3xl font-medium text-white mb-10
+
+/* ===================== Category ====================== */
+.category__heading, .upcoming__heading {
+  @apply text-2xl font-medium text-white mb-10
 }
 
 .category__list {
@@ -140,3 +142,13 @@
   @apply text-lg font-medium text-normalText transition-colors duration-300 hover:text-primary hover:underline hover:duration-300
 }
 
+
+/* =================== Upcoming Movies ==================== */
+
+.upcoming__container {
+  @apply flex flex-col gap-5
+}
+
+.upcoming__movie {
+  @apply flex items-center gap-3
+}
