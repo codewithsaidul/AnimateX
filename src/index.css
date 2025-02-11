@@ -73,14 +73,18 @@
 
 
   .hero__overlay {
-    @apply absolute top-0 left-0 right-0 bottom-0 bg-black/40
+    @apply absolute top-0 left-0 right-0 bottom-0 bg-black/30
   }
 
   .hero__title {
-    @apply text-white font-bold text-xl z-50 absolute top-0 left-0 right-0 bg-black/40 py-3
+    @apply text-white font-bold text-xl z-50 absolute top-0 left-0 right-0 px-4
   }
 
-  .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+  .hero__date {
+    @apply text-base text-white mt-10 z-50;
+  }
+
+  /* .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
     bottom: -6px !important;
     z-index: 20 !important;
   }
@@ -89,7 +93,7 @@
   .swiper-pagination-bullet {
     background: #fff !important;
     opacity: 1 !important;
-  }
+  } */
 
 
 
