@@ -125,3 +125,18 @@
 }
 
 
+
+/* ================================ Sidebar ================================= */
+
+.category__heading {
+  @apply text-3xl font-medium text-white mb-10
+}
+
+.category__list {
+  @apply flex flex-col gap-3 
+}
+
+.category__item {
+  @apply text-lg font-medium text-normalText transition-colors duration-300 hover:text-primary hover:underline hover:duration-300
+}
+
