@@ -25,7 +25,7 @@ const Hero = () => {
     queryKey: ["animes"],
     queryFn: async () => {
       try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/movie/top_rated?api_key=${import.meta.env.VITE_API_KEY}`);
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/movie/popular?api_key=${import.meta.env.VITE_API_KEY}`);
         return data.results;
       } catch (error) {
         console.error("Error fetching animes:", error.message);
@@ -33,6 +33,8 @@ const Hero = () => {
       }
     },
   });
+
+  console.log(animes)
 
   if (isLoading) return <div>Loading....</div>;
 
@@ -60,7 +62,6 @@ const Hero = () => {
             slidesPerGroup: 2,
           },
         }}
-        // pagination={true}
         modules={[Autoplay]}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className="mySwiper"
@@ -73,9 +74,14 @@ const Hero = () => {
               <img
                 src={`https://image.tmdb.org/t/p/original${anime.poster_path}`}
                 alt={anime.title}
-                className={`w-full h-70 object-cover rounded-xl shadow-lg transition-transform transform}`}
+                className={`w-full h-96 rounded-xl shadow-lg transition-transform transform}`}
               />
-            </div> 
+            </div>
+            <div className="absolute bottom-0 left-0 w-full h-16 px-4 py-2">
+             <h1 className="text-primary font-bold text-5xl"> {anime.title}</h1>
+            </div>
+
+            <div className="featured__overlay"></div> 
           </SwiperSlide>
         ))}
       </Swiper>

@@ -1,45 +1,86 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { FaStar } from "react-icons/fa";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const Fetured = () => {
   const { data: movies = [], isLoading } = useQuery({
     queryKey: "movies",
     queryFn: async () => {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/movie/popular?api_key=${
+        `${import.meta.env.VITE_BASE_URL}/movie/top_rated?api_key=${
           import.meta.env.VITE_API_KEY
-        }&page=1`
+        }`
       );
       return data.results;
     },
   });
 
-
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="my-24 px-6">
-      <h2 className="text-2xl font-bold mb-16">Fetured</h2>
+    <div className="my-10 px-6">
+      <h2 className="text-3xl text-primary font-bold mb-5">Fetured</h2>
 
       {/* ====================== fetred container ============================ */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-10">
-        {
-            movies.map((movie) => (
-              <div key={movie.id} className="relative">
-                <img
-                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                  alt={movie.title}
-                  className="w-full h-56 object-cover"
-                />
-                <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-r from-primary to-secondary text-white font-bold text-center px-4 py-2">
-                  {movie.title}
-                </div>
-              </div>
-            ))
+      <Swiper
+        spaceBetween={20}
+        centeredSlides={false}
+        loop={true}
+        autoplay={{
+          delay: 3500,
+          disableOnInteraction: false,
+        }}
+        breakpoints={{
+          640: {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+          },
+          768: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+          },
+          1024: {
+            slidesPerView: 6,
+            slidesPerGroup: 6,
+          },
+        }}
+        // pagination={true}
+        modules={[Autoplay]}
+        // onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+        className="mySwiper"
+      >
+        {movies.map((movie) => (
+          <SwiperSlide key={movie.id} className="relative shadow-amber-50">
+            <div>
+              <img
+                src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                alt={movie.title}
+                className="featured__img"
+              />
+            </div>
+            <div className="text-white">
+              <h3 className="featured__title">{movie.title.substring(0, 16)}...</h3>
+              <p className="text-sm text-normalText">{movie.release_date.substring(0, 4)}</p>
+            </div>
 
-  
-        }
-      </div>
+
+            <div className="absolute top-0 right-0 bg-primary  px-4 py-1">
+              <p className="text-xl font-bold text-white">Featured</p>
+            </div>
+
+            <div className="featured__rating bg-gradient-to-r from-primary to-secondary">
+              <p className="text-white flex items-center gap-2">
+                <span className="text-yellow-300"><FaStar size={16} /></span>
+                {movie.vote_average.toFixed(1)}
+              </p>
+            </div>
+
+            <div className="featured__overlay"></div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 };
