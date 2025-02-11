@@ -13,14 +13,20 @@
   --color-secondary: #00b4d8;
   --color-deepBlack: #121212;
   --color-normalText: #e0e0e0;
-  --shadow-primary: rgba(0, 119, 182, 0.3);
-  --shadow-deepShadow: rgba(0, 0, 0, 0.8);
-  --shadow-lift: rgba(255, 255, 255, 0.1);
+  --shadow-primary: 0 4px 12px rgba(0, 119, 182, 0.5);
+  --shadow-deepShadow: 0 4px 12px  rgba(0, 0, 0, 0.8);
+  --shadow-lift: 0 4px 12px  rgba(255, 255, 255, 0.1);
 
   /* ... */
 }
 
 
+
+@layer utilities {
+  .section__title {
+    @apply text-3xl font-bold text-primary;
+  }
+}
 
 
 
@@ -84,7 +90,7 @@
   }
 
   .hero__title {
-    @apply text-white font-bold text-xl z-50 absolute top-0 left-0 right-0 px-4
+    @apply text-white font-bold text-xl z-50 absolute top-0 left-0 right-0 px-4 truncate max-w-full
   }
 
   .hero__date {
@@ -120,6 +126,14 @@
     @apply flex items-center gap-2 text-sm text-white;
   }
 
+  .custom-prev {
+    @apply p-1 rounded-full bg-primary flex justify-center items-center transition-colors duration-500 hover:bg-primary/80 hover:duration-500;
+  }
+
+  .custom-next {
+    @apply p-1 rounded-full bg-primary flex justify-center items-center transition-colors duration-500 hover:bg-primary/80 hover:duration-500;
+  }
+
 
   .featured__img {
     @apply w-full h-64 object-cover
@@ -130,11 +144,11 @@
   }
 
   .featured__title {
-    @apply text-lg font-semibold font-title text-white mt-5
+    @apply text-lg font-semibold font-title text-white mt-5 truncate max-w-full
   }
 
   .featured__rating {
-    @apply absolute bottom-16 right-0  px-3 py-1
+    @apply absolute bottom-20 right-0  px-3 py-1
   }
 
   .featured__rating p {
@@ -142,6 +156,12 @@
   }
 
 
+}
+
+
+/* ========================== Latest Movies =============================== */
+.latest__movies-container {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
 }
 
 

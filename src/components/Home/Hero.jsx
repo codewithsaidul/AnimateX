@@ -77,7 +77,8 @@ const Hero = () => {
             <div className="hero__content">
               {/* <h1 className="hero__title"> {anime.title}</h1> */}
               <h2 className="hero__title">
-                {anime.title} ({anime.release_date.substring(0, 4)}) Dual...
+                {anime.title} ({anime.release_date.substring(0, 4)}) Dual Audio
+                [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p | GDRive
               </h2>
               <p className="hero__date">
                 {anime.release_date.substring(0, 4)}
