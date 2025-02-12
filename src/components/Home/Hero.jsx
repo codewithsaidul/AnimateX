@@ -15,8 +15,8 @@ import { useState } from "react";
 const Hero = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const { data: animes, isLoading } = useQuery({
-    queryKey: ["animes"],
+  const { data: movies, isLoading } = useQuery({
+    queryKey: ["movies"],
     queryFn: async () => {
       try {
         const { data } = await axios.get(
@@ -26,7 +26,7 @@ const Hero = () => {
         );
         return data.results;
       } catch (error) {
-        console.error("Error fetching animes:", error.message);
+        console.error("Error fetching movies:", error.message);
         throw error;
       }
     },
@@ -62,22 +62,22 @@ const Hero = () => {
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className="mySwiper"
       >
-        {animes.map((anime) => (
-          <SwiperSlide key={anime.id}>
+        {movies.map((movie) => (
+          <SwiperSlide key={movie.id}>
             <div className="relative">
               <img
-                src={`https://image.tmdb.org/t/p/original${anime.poster_path}`}
-                alt={anime.title}
+                src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                alt={movie.title}
                 className={`w-full h-96 rounded-xl shadow-lg transition-transform transform}`}
               />
             </div>
             <div className="absolute bottom-8 left-0 w-full h-16 px-4 py-2">
-              {/* <h1 className="hero__title"> {anime.title}</h1> */}
+              {/* <h1 className="hero__title"> {movie.title}</h1> */}
               <h2 className="hero__title">
-                {anime.title} ({anime.release_date.substring(0, 4)}) Dual...
+                {movie.title} ({movie.release_date.substring(0, 4)}) Dual...
               </h2>
               <p className="text-base text-normalText mt-10">
-                {anime.release_date.substring(0, 4)}
+                {movie.release_date.substring(0, 4)}
               </p>
             </div>
 
@@ -92,7 +92,7 @@ const Hero = () => {
 
       {/* Custom Pagination */}
       <div className="flex justify-center mt-4 space-x-2">
-        {animes.slice(0, 3).map((_, index) => (
+        {movies.slice(0, 3).map((_, index) => (
           <span
             key={index}
             className={`h-3 w-3 rounded-full transition-all ${
