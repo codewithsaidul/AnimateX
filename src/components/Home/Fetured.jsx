@@ -22,9 +22,9 @@ const Fetured = () => {
 
   return (
     <div className="my-10 px-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-8">
         {" "}
-        <h2 className="text-3xl text-primary font-bold mb-5">Fetured</h2>
+        <h2 className="section__title">Fetured</h2>
         <div className="featured__navigation">
           <div className="custom-prev">
             <IoIosArrowBack size={24} />
@@ -69,7 +69,7 @@ const Fetured = () => {
         className="mySwiper"
       >
         {movies.map((movie) => (
-          <SwiperSlide key={movie.id} className="relative shadow-amber-50">
+          <SwiperSlide key={movie.id} className="relative shadow-lift">
             <div>
               <img
                 src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
@@ -77,9 +77,10 @@ const Fetured = () => {
                 className="featured__img"
               />
             </div>
-            <div className="text-white">
+            <div className="text-white px-4 py-2">
               <h3 className="featured__title">
-                {movie.title.substring(0, 16)}...
+                {movie.title} ({movie.release_date.substring(0, 4)}) Dual Audio
+                [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p | GDRive
               </h3>
               <p className="text-sm text-normalText">
                 {movie.release_date.substring(0, 4)}
