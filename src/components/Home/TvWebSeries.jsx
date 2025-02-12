@@ -29,7 +29,7 @@ const TvWebSeries = () => {
 
       {/* ================= Latest Movies Container ================== */}
       <div className="latest__movies-container mt-8">
-        {movies.slice(0, 12).map((movie) => (
+        {movies.map((movie) => (
           <div key={movie.id} className="latest__movie relative shadow-lift">
             <div>
               <img

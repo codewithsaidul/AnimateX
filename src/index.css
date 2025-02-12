@@ -21,6 +21,12 @@
 }
 
 
+@layer base {
+  img{
+    @apply text-white
+  }
+}
+
 
 @layer utilities {
   .section__title {

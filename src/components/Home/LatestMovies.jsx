@@ -11,12 +11,14 @@ const LatestMovies = () => {
       const { data } = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/movie/now_playing?api_key=${
           import.meta.env.VITE_API_KEY
-        }&sort_by=release_date.desc`
+        }`
       );
       return data.results;
     },
     // refetchInterval: 600000 // 600000 milliseconds = 1 hour
   });
+
+  console.log(movies)
   
 
   if (isLoading) return <div>Loading...</div>;
