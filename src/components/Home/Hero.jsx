@@ -31,6 +31,8 @@ const Hero = () => {
       }
     },
   });
+  
+
 
   if (isLoading) return <div>Loading....</div>;
 
@@ -66,23 +68,24 @@ const Hero = () => {
           <SwiperSlide key={anime.id}>
             <div className="relative">
               <img
-                src={`https://image.tmdb.org/t/p/original${anime.poster_path}`}
+                src={`https://image.tmdb.org/t/p/original${anime.backdrop_path}`}
                 alt={anime.title}
-                className={`w-full h-96 rounded-xl shadow-lg transition-transform transform}`}
+                className="hero__img"
               />
             </div>
-            <div className="absolute bottom-8 left-0 w-full h-16 px-4 py-2">
+            <div className="hero__content">
               {/* <h1 className="hero__title"> {anime.title}</h1> */}
               <h2 className="hero__title">
-                {anime.title} ({anime.release_date.substring(0, 4)}) Dual...
+                {anime.title} ({anime.release_date.substring(0, 4)}) Dual Audio
+                [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p | GDRive
               </h2>
-              <p className="text-base text-normalText mt-10">
+              <p className="hero__date">
                 {anime.release_date.substring(0, 4)}
               </p>
             </div>
 
-            <div className="absolute bottom-0 right-0 bg-primary z-50 px-4 py-1">
-              <p className="text-xl font-bold text-white">Movie</p>
+            <div className="hero__tag">
+              <p className="hero__tag-title">Movie</p>
             </div>
 
             <div className="hero__overlay"></div>
@@ -91,11 +94,11 @@ const Hero = () => {
       </Swiper>
 
       {/* Custom Pagination */}
-      <div className="flex justify-center mt-4 space-x-2">
+      <div className="hero__custom-pagination">
         {animes.slice(0, 3).map((_, index) => (
           <span
             key={index}
-            className={`h-3 w-3 rounded-full transition-all ${
+            className={`hero__custom-pagination-item ${
               index === activeIndex % 3 ? "bg-primary w-5" : "bg-gray-400"
             }`}
           />
