@@ -2,32 +2,30 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
 
-const LatestMovies = () => {
-
-
+const TvWebSeries = () => {
   const { data: movies = [], isLoading } = useQuery({
-    queryKey: "latestMovies",
+    queryKey: "tvwebseries",
     queryFn: async () => {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/movie/now_playing?api_key=${
+        `${import.meta.env.VITE_BASE_URL}/tv/popular?api_key=${
           import.meta.env.VITE_API_KEY
-        }&sort_by=release_date.desc`
+        }`
       );
       return data.results;
     },
     // refetchInterval: 600000 // 600000 milliseconds = 1 hour
   });
-  
+
+
+  console.log(movies)
 
   if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="my-12 px-6">
       <div className="flex justify-between items-center">
-        <h2 className="section__title">Latest Movies</h2>
-        <p className="text-base text-white">
-          See All
-        </p>
+        <h2 className="section__title">TV & Web Series</h2>
+        <p className="text-base text-white">See All</p>
       </div>
 
       {/* ================= Latest Movies Container ================== */}
@@ -43,11 +41,11 @@ const LatestMovies = () => {
             </div>
             <div className="latest__movie-content">
               <h3>
-                {movie.title} ({movie.release_date.substring(0, 4)}) Dual Audio
+                {movie.name} ({movie.first_air_date.substring(0, 4)}) Dual Audio
                 [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p | GDRive
               </h3>
               <p className="text-sm text-normalText">
-                {new Date(movie.release_date).toLocaleDateString("en-US", {
+                {new Date(movie.first_air_date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
@@ -72,4 +70,4 @@ const LatestMovies = () => {
   );
 };
 
-export default LatestMovies;
+export default TvWebSeries;

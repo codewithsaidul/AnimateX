@@ -31,9 +31,8 @@ const Hero = () => {
       }
     },
   });
+  
 
-
-  console.log(animes)
 
   if (isLoading) return <div>Loading....</div>;
 
