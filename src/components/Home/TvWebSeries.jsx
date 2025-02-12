@@ -7,7 +7,7 @@ const TvWebSeries = () => {
     queryKey: "tvwebseries",
     queryFn: async () => {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/tv/popular?api_key=${
+        `${import.meta.env.VITE_BASE_URL}/tv/top_rated?api_key=${
           import.meta.env.VITE_API_KEY
         }`
       );
@@ -17,7 +17,6 @@ const TvWebSeries = () => {
   });
 
 
-  console.log(movies)
 
   if (isLoading) return <div>Loading...</div>;
 
