@@ -15,7 +15,7 @@ import { useState } from "react";
 const Hero = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const { data: movies, isLoading } = useQuery({
+  const { data: movies = [], isLoading } = useQuery({
     queryKey: ["movies"],
     queryFn: async () => {
       try {
@@ -32,7 +32,6 @@ const Hero = () => {
     },
   });
   
-
 
   if (isLoading) return <div>Loading....</div>;
 
@@ -74,7 +73,6 @@ const Hero = () => {
               />
             </div>
             <div className="absolute bottom-8 left-0 w-full h-16 px-4 py-2">
-              {/* <h1 className="hero__title"> {anime.title}</h1> */}
               <h2 className="hero__title">
                 {movie.title} ({movie.release_date.substring(0, 4)}) Dual...
               </h2>

@@ -1,8 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc"; // Import UTC plugin
-dayjs.extend(utc); // Extend dayjs with the UTC plugin
 
 import { FaStar } from "react-icons/fa";
 
@@ -11,8 +8,15 @@ const UpComingMovies = () => {
     queryKey: ["upcomingMovies"],
     queryFn: async () => {
       try {
+        const today = new Date().toISOString().split("T")[0]; // বর্তমান তারিখ YYYY-MM-DD
+        const nextMonth = new Date();
+        nextMonth.setMonth(nextMonth.getMonth() + 1); // ১ মাস পরের তারিখ
+        const nextMonthFormatted = nextMonth.toISOString().split("T")[0];
+
         const { data } = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/discover/movie?api_key=${import.meta.env.VITE_API_KEY}&sort_by=release_date.asc&primary_release_date.gte=2025-02-12&page=1`
+          `${import.meta.env.VITE_BASE_URL}/discover/movie?api_key=${
+            import.meta.env.VITE_API_KEY
+          }&primary_release_date.gte=${today}&primary_release_date.lte=${nextMonthFormatted}`
         );
 
         return data.results; // ✅ Returns upcoming movies
@@ -31,7 +35,7 @@ const UpComingMovies = () => {
 
       {/* ================ Upcoming Movies Container ================= */}
       <div className="upcoming__container">
-        {upcomingMovies.slice(0, 5).map((movie, index) => (
+        {upcomingMovies.slice(0, 7).map((movie, index) => (
           <div key={index} className="upcoming__movie">
             <img
               src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
@@ -48,7 +52,11 @@ const UpComingMovies = () => {
                 [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p | GDRive
               </h4>
               <p className="text-white text-sm">
-                {movie.release_date.substring(0, 4)}
+                {new Date(movie.release_date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
               </p>
               <p className="text-white text-xs flex items-center gap-1">
                 <FaStar size={14} />
