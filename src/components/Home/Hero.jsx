@@ -15,8 +15,8 @@ import { useState } from "react";
 const Hero = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const { data: animes, isLoading } = useQuery({
-    queryKey: ["animes"],
+  const { data: movies = [], isLoading } = useQuery({
+    queryKey: ["movies"],
     queryFn: async () => {
       try {
         const { data } = await axios.get(
@@ -26,13 +26,12 @@ const Hero = () => {
         );
         return data.results;
       } catch (error) {
-        console.error("Error fetching animes:", error.message);
+        console.error("Error fetching movies:", error.message);
         throw error;
       }
     },
   });
   
-
 
   if (isLoading) return <div>Loading....</div>;
 
@@ -64,23 +63,22 @@ const Hero = () => {
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className="mySwiper"
       >
-        {animes.map((anime) => (
-          <SwiperSlide key={anime.id}>
+        {movies.map((movie) => (
+          <SwiperSlide key={movie.id}>
             <div className="relative">
               <img
-                src={`https://image.tmdb.org/t/p/original${anime.backdrop_path}`}
-                alt={anime.title}
-                className="hero__img"
+                src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                alt={movie.title}
+                loading="lazy"
+                className={`w-full h-96 rounded-xl shadow-lg transition-transform transform}`}
               />
             </div>
-            <div className="hero__content">
-              {/* <h1 className="hero__title"> {anime.title}</h1> */}
+            <div className="absolute bottom-8 left-0 w-full h-16 px-4 py-2">
               <h2 className="hero__title">
-                {anime.title} ({anime.release_date.substring(0, 4)}) Dual Audio
-                [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p | GDRive
+                {movie.title} ({movie.release_date.substring(0, 4)}) Dual...
               </h2>
-              <p className="hero__date">
-                {anime.release_date.substring(0, 4)}
+              <p className="text-base text-normalText mt-10">
+                {movie.release_date.substring(0, 4)}
               </p>
             </div>
 
@@ -94,8 +92,8 @@ const Hero = () => {
       </Swiper>
 
       {/* Custom Pagination */}
-      <div className="hero__custom-pagination">
-        {animes.slice(0, 3).map((_, index) => (
+      <div className="flex justify-center mt-4 space-x-2">
+        {movies.slice(0, 3).map((_, index) => (
           <span
             key={index}
             className={`hero__custom-pagination-item ${

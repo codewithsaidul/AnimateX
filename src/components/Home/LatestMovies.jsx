@@ -6,18 +6,18 @@ const LatestMovies = () => {
 
 
   const { data: movies = [], isLoading } = useQuery({
-    queryKey: "latestMovies",
+    queryKey: ["latestMovies"],
     queryFn: async () => {
       const { data } = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/movie/now_playing?api_key=${
           import.meta.env.VITE_API_KEY
-        }&sort_by=release_date.desc`
+        }`
       );
       return data.results;
     },
     // refetchInterval: 600000 // 600000 milliseconds = 1 hour
   });
-  
+
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -38,6 +38,7 @@ const LatestMovies = () => {
               <img
                 src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                 alt={movie.title}
+                loading="lazy"
                 className="featured__img"
               />
             </div>

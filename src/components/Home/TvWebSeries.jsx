@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa";
 
 const TvWebSeries = () => {
   const { data: movies = [], isLoading } = useQuery({
-    queryKey: "tvwebseries",
+    queryKey: ["tvwebseries"],
     queryFn: async () => {
       const { data } = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/tv/top_rated?api_key=${
@@ -35,6 +35,7 @@ const TvWebSeries = () => {
               <img
                 src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                 alt={movie.title}
+                loading="lazy"
                 className="featured__img"
               />
             </div>
