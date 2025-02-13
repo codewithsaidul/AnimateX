@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 const Fetured = () => {
   const { data: movies = [], isLoading } = useQuery({
-    queryKey: "movies",
+    queryKey: ["movies"],
     queryFn: async () => {
       const { data } = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/movie/top_rated?api_key=${
@@ -74,6 +74,7 @@ const Fetured = () => {
               <img
                 src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                 alt={movie.title}
+                loading="lazy"
                 className="featured__img"
               />
             </div>

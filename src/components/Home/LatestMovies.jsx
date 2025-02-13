@@ -6,7 +6,7 @@ const LatestMovies = () => {
 
 
   const { data: movies = [], isLoading } = useQuery({
-    queryKey: "latestMovies",
+    queryKey: ["latestMovies"],
     queryFn: async () => {
       const { data } = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/movie/now_playing?api_key=${
@@ -18,8 +18,6 @@ const LatestMovies = () => {
     // refetchInterval: 600000 // 600000 milliseconds = 1 hour
   });
 
-  console.log(movies)
-  
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -40,6 +38,7 @@ const LatestMovies = () => {
               <img
                 src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                 alt={movie.title}
+                loading="lazy"
                 className="featured__img"
               />
             </div>

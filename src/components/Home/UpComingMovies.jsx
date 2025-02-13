@@ -8,7 +8,10 @@ const UpComingMovies = () => {
     queryKey: ["upcomingMovies"],
     queryFn: async () => {
       try {
-        const today = new Date().toISOString().split("T")[0]; // বর্তমান তারিখ YYYY-MM-DD
+        // const today = new Date().toISOString().split("T")[0]; // বর্তমান তারিখ YYYY-MM-DD
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1); // Add 1 day
+        const tomorrowFormatted = tomorrow.toISOString().split("T")[0];
         const nextMonth = new Date();
         nextMonth.setMonth(nextMonth.getMonth() + 1); // ১ মাস পরের তারিখ
         const nextMonthFormatted = nextMonth.toISOString().split("T")[0];
@@ -16,7 +19,7 @@ const UpComingMovies = () => {
         const { data } = await axios.get(
           `${import.meta.env.VITE_BASE_URL}/discover/movie?api_key=${
             import.meta.env.VITE_API_KEY
-          }&primary_release_date.gte=${today}&primary_release_date.lte=${nextMonthFormatted}`
+          }&primary_release_date.gte=${tomorrowFormatted}&primary_release_date.lte=${nextMonthFormatted}&sort_by=primary_release_date.asc`
         );
 
         return data.results; // ✅ Returns upcoming movies
@@ -35,11 +38,12 @@ const UpComingMovies = () => {
 
       {/* ================ Upcoming Movies Container ================= */}
       <div className="upcoming__container">
-        {upcomingMovies.slice(0, 7).map((movie, index) => (
+        {upcomingMovies.map((movie, index) => (
           <div key={index} className="upcoming__movie">
             <img
               src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
               alt={movie.title}
+              loading="lazy"
               className="w-20 h-20"
             />
             <div>
