@@ -212,3 +212,14 @@
 .upcoming__movie {
   @apply flex items-center gap-3
 }
+
+
+/* ===================== Search Container ========================= */
+
+.search__container {
+  @apply flex flex-col gap-12 sm:gap-5
+}
+
+.search__movie {
+  @apply flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-3
+}
