@@ -1,22 +1,49 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import Pagination from "../Movie/Pagination";
+import { useEffect, useState } from "react";
 
-const TvWebSeries = () => {
-  const { data: movies = [], isLoading } = useQuery({
+const TvWebSeries = ({ cusClass, pagClass }) => {
+  const [currentPage, setCurrentPage] = useState(1); // Track current page
+
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["tvwebseries"],
     queryFn: async () => {
       const { data } = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/tv/top_rated?api_key=${
           import.meta.env.VITE_API_KEY
-        }`
+        }&page=${currentPage}`
       );
-      return data.results;
+      return {
+        movies: data.results,
+        total_pages: data.total_pages,
+      };
     },
+    keepPreviousData: true,
     // refetchInterval: 600000 // 600000 milliseconds = 1 hour
   });
 
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= data?.total_pages) {
+      setCurrentPage(page); // Update current page on user click
+      // refetch()
+    }
+  };
 
+  useEffect(() => {
+    let isMounted = true; // Keep track of whether the component is mounted
+
+    if (isMounted && currentPage && refetch) {
+      refetch(); // Trigger refetch if component is mounted
+    }
+
+    return () => {
+      isMounted = false; // Cleanup when component unmounts
+    };
+  }, [currentPage, refetch]);
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -24,12 +51,17 @@ const TvWebSeries = () => {
     <div className="my-12 px-6">
       <div className="flex justify-between items-center">
         <h2 className="section__title">TV & Web Series</h2>
-        <p className="text-base text-white">See All</p>
+        <Link
+          to="/tv-web-series"
+          className={`text-base text-white ${cusClass}`}
+        >
+          See All
+        </Link>
       </div>
 
       {/* ================= Latest Movies Container ================== */}
       <div className="latest__movies-container mt-8">
-        {movies.map((movie) => (
+        {data?.movies.map((movie) => (
           <div key={movie.id} className="latest__movie relative shadow-lift">
             <div>
               <img
@@ -66,8 +98,21 @@ const TvWebSeries = () => {
           </div>
         ))}
       </div>
+
+      {/* ================= Pagination ===================== */}
+      <Pagination
+        totalPages={data?.total_pages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+        pagiClass={pagClass}
+      />
     </div>
   );
+};
+
+TvWebSeries.propTypes = {
+  cusClass: PropTypes.string,
+  pagClass: PropTypes.string,
 };
 
 export default TvWebSeries;

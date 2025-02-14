@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 
 
-const Pagination = ({ totalPages, currentPage, onPageChange }) => {
+const Pagination = ({ totalPages, currentPage, onPageChange, pagiClass }) => {
 
 
   const handlePageChange = (page) => {
@@ -24,7 +24,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
   }
 
   return (
-    <div className="mt-10 flex items-center gap-6">
+    <div className={`mt-10 flex items-center gap-6 ${pagiClass}`}>
       <h4 className="text-xl text-white">
         <span className="font-semibold text-primary">Page</span> {currentPage} of {totalPages}
       </h4>
@@ -66,7 +66,8 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
 Pagination.propTypes = {
     totalPages: PropTypes.number,
     currentPage: PropTypes.number,
-    onPageChange: PropTypes.func
+    onPageChange: PropTypes.func,
+    pagiClass: PropTypes.string
 }
 
 export default Pagination;
