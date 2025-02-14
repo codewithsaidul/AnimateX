@@ -3,6 +3,7 @@ import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home";
 import AllMovie from "../pages/AllMovie";
 import ALLWebSeries from "../pages/ALLWebSeries";
+import Upcoming from "../pages/Upcoming";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/upcoming",
-        element: <AllMovie />
+        element: <Upcoming />
       },
 
     ],

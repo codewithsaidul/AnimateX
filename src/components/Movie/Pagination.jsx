@@ -33,6 +33,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange, pagiClass }) => {
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           className="text-base font-medium text-white border-2 border-primary bg-primary rounded-lg py-2 px-4 disabled:opacity-50"
+          disabled={currentPage === 1}
         >
           Prev
         </button>
@@ -51,8 +52,8 @@ const Pagination = ({ totalPages, currentPage, onPageChange, pagiClass }) => {
         ))}
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === 1}
-          className="text-base font-medium text-white border-2 rounded-lg bg-primary border-primary px-4 py-2"
+          disabled={currentPage === totalPages}
+          className="text-base font-medium text-white border-2 rounded-lg bg-primary border-primary px-4 py-2 disabled:opacity-50"
         >
           Next
         </button>

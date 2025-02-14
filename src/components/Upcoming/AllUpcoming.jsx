@@ -1,39 +1,66 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import Pagination from "../Movie/Pagination";
+import { useEffect, useState } from "react";
 
-const LatestMovies = () => {
+const AllUpcoming = () => {
+  const [currentPage, setCurrentPage] = useState(1); // Track current page
 
-
-  const { data: movies = [], isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["latestMovies"],
     queryFn: async () => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1); // Add 1 day
+      const tomorrowFormatted = tomorrow.toISOString().split("T")[0];
+      const nextMonth = new Date();
+      nextMonth.setMonth(nextMonth.getMonth() + 1); // ১ মাস পরের তারিখ
+      const nextMonthFormatted = nextMonth.toISOString().split("T")[0];
+
       const { data } = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/movie/now_playing?api_key=${
+        `${import.meta.env.VITE_BASE_URL}/discover/movie?api_key=${
           import.meta.env.VITE_API_KEY
-        }`
+        }&primary_release_date.gte=${tomorrowFormatted}&primary_release_date.lte=${nextMonthFormatted}&sort_by=primary_release_date.asc&page=${currentPage}`
       );
-      return data.results;
+      return {
+        movies: data.results,
+        total_pages: data.total_pages,
+      };
     },
+    keepPreviousData: true,
     // refetchInterval: 600000 // 600000 milliseconds = 1 hour
   });
 
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= data?.total_pages) {
+      setCurrentPage(page); // Update current page on user click
+      // refetch()
+    }
+  };
+
+  useEffect(() => {
+    let isMounted = true; // Keep track of whether the component is mounted
+
+    if (isMounted && currentPage && refetch) {
+      refetch(); // Trigger refetch if component is mounted
+    }
+
+    return () => {
+      isMounted = false; // Cleanup when component unmounts
+    };
+  }, [currentPage, refetch]);
 
   if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="my-12 px-6">
       <div className="flex justify-between items-center">
-        <h2 className="section__title">Latest Movies</h2>
-        <Link to="/movies" className="text-base text-white">
-          See All
-        </Link>
+        <h2 className="section__title">Upcoming Movies</h2>
       </div>
 
       {/* ================= Latest Movies Container ================== */}
       <div className="latest__movies-container mt-8">
-        {movies.slice(0, 12).map((movie) => (
+        {data?.movies.map((movie) => (
           <div key={movie.id} className="latest__movie relative shadow-lift">
             <div>
               <img
@@ -70,8 +97,15 @@ const LatestMovies = () => {
           </div>
         ))}
       </div>
+
+      {/* ======================= Pagination ===================== */}
+      <Pagination
+        totalPages={data?.total_pages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };
 
-export default LatestMovies;
+export default AllUpcoming;
