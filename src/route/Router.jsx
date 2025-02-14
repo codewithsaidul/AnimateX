@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home";
 import AllMovie from "../pages/AllMovie";
+import ALLWebSeries from "../pages/ALLWebSeries";
 
 const router = createBrowserRouter([
   {
@@ -17,8 +18,8 @@ const router = createBrowserRouter([
         element: <AllMovie />
       },
       {
-        path: "/genres",
-        element: <AllMovie />
+        path: "/genres/tv-web-series",
+        element: <ALLWebSeries />
       },
       {
         path: "/upcoming",

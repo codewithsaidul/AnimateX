@@ -12,7 +12,7 @@ const Navbar = () => {
     },
     {
       title: "Genres",
-      path: "/genres",
+      path: "/genres/tv-web-series",
     },
     {
       title: "Upcoming",
