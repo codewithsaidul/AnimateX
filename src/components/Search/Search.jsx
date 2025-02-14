@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { FaStar } from "react-icons/fa6";
 
 const Search = ({ movies, searchName }) => {
-  console.log(typeof searchName);
+
   return (
     <div className="mt-10 px-6">
       <div className="mb-12">
