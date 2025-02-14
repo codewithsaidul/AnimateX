@@ -14,6 +14,10 @@ const Navbar = () => {
       title: "Genres",
       path: "/genres",
     },
+    {
+      title: "Upcoming",
+      path: "/upcoming",
+    },
   ];
 
   return (
