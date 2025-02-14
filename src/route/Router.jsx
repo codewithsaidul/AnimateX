@@ -5,6 +5,7 @@ import AllMovie from "../pages/AllMovie";
 import ALLWebSeries from "../pages/ALLWebSeries";
 import Upcoming from "../pages/Upcoming";
 import SearchMovie from "../pages/SearchMovie";
+import CategoryPage from "../pages/CategoryPage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <SearchMovie />
+      },
+      {
+        path: "/genre/:genre",
+        element: <CategoryPage />
       },
 
     ],
