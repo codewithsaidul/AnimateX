@@ -40,7 +40,7 @@ const Navbar = () => {
       <nav className="px-6 mx-auto nav">
         <div className="nav__menu">
           <a href="/" className="nav__logo">
-            <img src="public/Logo.svg" alt="logo" />
+            <img src="/Logo.svg" alt="logo" />
             <h3 className="text-primary">AnimateX</h3>
           </a>
 
