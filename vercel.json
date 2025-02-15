@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/movies", "destination": "/" },
+    { "source": "/genres/tv-web-series", "destination": "/" },
+    { "source": "/upcoming", "destination": "/" },
+    { "source": "/search", "destination": "/" },
+    { "source": "/genre/:genre", "destination": "/" }
+  ]
+}
