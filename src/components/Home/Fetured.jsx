@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { Link } from "react-router-dom";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -70,38 +71,41 @@ const Fetured = () => {
       >
         {movies.map((movie) => (
           <SwiperSlide key={movie.id} className="relative shadow-lift">
-            <div>
-              <img
-                src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                alt={movie.title}
-                loading="lazy"
-                className="featured__img"
-              />
-            </div>
-            <div className="text-white px-4 py-2">
-              <h3 className="featured__title">
-                {movie.title} ({movie.release_date.substring(0, 4)}) Dual Audio
-                [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p | GDRive
-              </h3>
-              <p className="text-sm text-normalText">
-                {movie.release_date.substring(0, 4)}
-              </p>
-            </div>
+            <Link to={`/movie/${encodeURI(movie.title)}`}>
+              <div>
+                <img
+                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                  alt={movie.title}
+                  loading="lazy"
+                  className="featured__img"
+                />
+              </div>
+              <div className="text-white px-4 py-2">
+                <h3 className="featured__title">
+                  {movie.title} ({movie.release_date.substring(0, 4)}) Dual
+                  Audio [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p |
+                  GDRive
+                </h3>
+                <p className="text-sm text-normalText">
+                  {movie.release_date.substring(0, 4)}
+                </p>
+              </div>
 
-            <div className="absolute top-0 right-0 bg-primary  px-4 py-1">
-              <p className="text-xl font-bold text-white">Featured</p>
-            </div>
+              <div className="absolute top-0 right-0 bg-primary  px-4 py-1">
+                <p className="text-xl font-bold text-white">Featured</p>
+              </div>
 
-            <div className="featured__rating bg-gradient-to-r from-primary to-secondary">
-              <p className="text-white flex items-center gap-2">
-                <span className="text-yellow-300">
-                  <FaStar size={16} />
-                </span>
-                {movie.vote_average.toFixed(1)}
-              </p>
-            </div>
+              <div className="featured__rating bg-gradient-to-r from-primary to-secondary">
+                <p className="text-white flex items-center gap-2">
+                  <span className="text-yellow-300">
+                    <FaStar size={16} />
+                  </span>
+                  {movie.vote_average.toFixed(1)}
+                </p>
+              </div>
 
-            <div className="featured__overlay"></div>
+              <div className="featured__overlay"></div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
