@@ -6,6 +6,7 @@ import ALLWebSeries from "../pages/ALLWebSeries";
 import Upcoming from "../pages/Upcoming";
 import SearchMovie from "../pages/SearchMovie";
 import CategoryPage from "../pages/CategoryPage";
+import SingleMovie from "../pages/SingleMovie";
 
 const router = createBrowserRouter([
   {
@@ -18,25 +19,38 @@ const router = createBrowserRouter([
       },
       {
         path: "/movies",
-        element: <AllMovie />
+        element: <AllMovie />,
       },
       {
         path: "/genres/tv-web-series",
-        element: <ALLWebSeries />
+        element: <ALLWebSeries />,
       },
       {
         path: "/upcoming",
-        element: <Upcoming />
+        element: <Upcoming />,
       },
       {
         path: "/search",
-        element: <SearchMovie />
+        element: <SearchMovie />,
       },
       {
         path: "/genre/:genre",
-        element: <CategoryPage />
+        element: <CategoryPage />,
       },
-
+      {
+        path: "/movie/:movieName",
+        element: <SingleMovie />,
+        loader: ({ params }) => {
+          const movieNam = decodeURIComponent(params.movieName); // ✅ Encode for URL Safety
+          const apiUrl = `${
+              import.meta.env.VITE_BASE_URL
+            }/search/movie?query=${movieNam}&api_key=${
+              import.meta.env.VITE_API_KEY
+            }&append_to_response=images,videos,credits`
+            console.log(apiUrl)
+          return fetch(apiUrl)
+        },
+      },
     ],
   },
 ]);
