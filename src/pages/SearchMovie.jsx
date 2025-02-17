@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Search from "../components/Search/Search";
 import Genre from "../components/Home/Genre";
+import { useEffect } from "react";
 
 const SearchMovie = () => {
-  const location = useLocation();
-  const query = new URLSearchParams(location.search).get("query");
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("query") || "";
 
-  const { data: movies = [], isLoading } = useQuery({
-    queryKey: ["query"],
+  const { data: movies = [], isLoading, refetch } = useQuery({
+    queryKey: ["query", query],
     queryFn: async () => {
       const { data } = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/search/movie?api_key=${
@@ -19,6 +20,12 @@ const SearchMovie = () => {
       return data.results;
     },
   });
+
+
+  useEffect(() => {
+    if (query) refetch(); // Query change hole refetch()
+  }, [query, refetch]);
+
 
 
   if (isLoading) return <div>Loading...</div>;

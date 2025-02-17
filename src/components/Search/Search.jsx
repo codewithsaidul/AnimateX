@@ -1,19 +1,37 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { FaStar } from "react-icons/fa6";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Search = ({ movies, searchName }) => {
 
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate()
+
+  const urlQuery = searchParams.get("query");
+  const [query, setQuery] = useState(urlQuery || "")
+
+  console.log(urlQuery)
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/search?query=${encodeURIComponent(query)}`);
+    }
+  };
+
   return (
     <div className="mt-10 px-6">
-      <div className="mb-12">
+      <form onSubmit={handleSearch} className="mb-12">
         <h2 className="text-2xl font-bold text-white">Found of {searchName}</h2>
         <input
           type="text"
-          value={searchName}
-          // placeholder={searchName}
+          value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search..."
           className="py-1 px-6 border-2 border-primary text-white mt-5 rounded-lg text-xl"
         />
-      </div>
+      </form>
 
       {/* ================ Upcoming Movies Container ================= */}
       <div className="search__container ">
