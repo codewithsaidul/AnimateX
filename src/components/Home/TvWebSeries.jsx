@@ -26,6 +26,7 @@ const TvWebSeries = ({ cusClass, pagClass }) => {
     // refetchInterval: 600000 // 600000 milliseconds = 1 hour
   });
 
+
   const handlePageChange = (page) => {
     if (page >= 1 && page <= data?.total_pages) {
       setCurrentPage(page); // Update current page on user click
