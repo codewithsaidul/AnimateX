@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 import { FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const UpComingMovies = () => {
   const { data: upcomingMovies = [], isLoading } = useQuery({
@@ -39,7 +40,11 @@ const UpComingMovies = () => {
       {/* ================ Upcoming Movies Container ================= */}
       <div className="upcoming__container">
         {upcomingMovies.map((movie, index) => (
-          <div key={index} className="upcoming__movie">
+          <Link
+            to={`/movie/${encodeURIComponent(movie.title || movie.name)}`}
+            key={index}
+            className="upcoming__movie"
+          >
             <img
               src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
               alt={movie.title}
@@ -67,7 +72,7 @@ const UpComingMovies = () => {
                 {movie.vote_average.toFixed(1)}
               </p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

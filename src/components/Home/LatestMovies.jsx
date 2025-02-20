@@ -34,7 +34,7 @@ const LatestMovies = () => {
       {/* ================= Latest Movies Container ================== */}
       <div className="latest__movies-container mt-8">
         {movies.slice(0, 12).map((movie) => (
-          <div key={movie.id} className="latest__movie relative shadow-lift">
+          <Link to={`/movie/${encodeURIComponent(movie.title || movie.name)}`} key={movie.id} className="latest__movie relative shadow-lift">
             <div>
               <img
                 src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
@@ -67,7 +67,7 @@ const LatestMovies = () => {
             </div>
 
             <div className="featured__overlay"></div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

@@ -13,7 +13,7 @@ const SearchMovie = () => {
     queryKey: ["query", query],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/search/movie?api_key=${
+        `${import.meta.env.VITE_BASE_URL}/search/multi?api_key=${
           import.meta.env.VITE_API_KEY
         }&query=${query}`
       );

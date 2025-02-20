@@ -11,7 +11,6 @@ const Search = ({ movies, searchName }) => {
   const urlQuery = searchParams.get("query");
   const [query, setQuery] = useState(urlQuery || "");
 
-
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
@@ -22,7 +21,9 @@ const Search = ({ movies, searchName }) => {
   return (
     <div className="mt-10 px-6">
       <form onSubmit={handleSearch} className="mb-12">
-        <h2 className="text-2xl font-bold text-white">Result Found {searchName}</h2>
+        <h2 className="text-2xl font-bold text-white">
+          Result Found {searchName}
+        </h2>
         <input
           type="text"
           value={query}
@@ -44,16 +45,22 @@ const Search = ({ movies, searchName }) => {
                 className="w-full h-60 sm:w-[10%] sm:h-32"
               />
               <div>
-                <Link to={`/movie/${encodeURIComponent(movie.title)}`} className="text-base text-white">
-                  {movie.title} ({movie.release_date.substring(0, 4)}) Dual
-                  Audio [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p |
-                  GDRive
+                <Link
+                  to={`/movie/${encodeURIComponent(movie.title || movie.name)}`}
+                  className="text-base text-white"
+                >
+                  {movie.title || movie.name} (
+                  {movie.release_date
+                    ? movie.release_date.substring(0, 4)
+                    : movie.first_air_date?.substring(0, 4)}
+                  ) Dual Audio [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p
+                  | GDRive
                 </Link>
                 <p className="text-normalText">
                   {movie.overview.substring(0, 150)}
                 </p>
                 <p className="text-white text-sm">
-                  {new Date(movie.release_date).toLocaleDateString("en-US", {
+                  {new Date(movie.release_date || movie.first_air_date).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "short",
                     day: "numeric",

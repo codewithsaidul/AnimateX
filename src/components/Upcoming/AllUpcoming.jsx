@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaStar } from "react-icons/fa";
 import Pagination from "../Movie/Pagination";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const AllUpcoming = () => {
   const [currentPage, setCurrentPage] = useState(1); // Track current page
@@ -61,7 +62,11 @@ const AllUpcoming = () => {
       {/* ================= Latest Movies Container ================== */}
       <div className="latest__movies-container mt-8">
         {data?.movies.map((movie) => (
-          <div key={movie.id} className="latest__movie relative shadow-lift">
+          <Link
+            to={`/movie/${encodeURIComponent(movie.title || movie.name)}`}
+            key={movie.id}
+            className="latest__movie relative shadow-lift"
+          >
             <div>
               <img
                 src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
@@ -72,11 +77,15 @@ const AllUpcoming = () => {
             </div>
             <div className="latest__movie-content">
               <h3>
-                {movie.title} ({movie.release_date.substring(0, 4)}) Dual Audio
-                [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p | GDRive
+                {movie.title || movie.name} (
+                {movie.release_date
+                  ? movie.release_date.substring(0, 4)
+                  : movie.first_air_date?.substring(0, 4)}
+                ) Dual Audio [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p |
+                GDRive
               </h3>
               <p className="text-sm text-normalText">
-                {new Date(movie.release_date).toLocaleDateString("en-US", {
+                {new Date(movie.release_date|| movie.first_air_date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
@@ -94,7 +103,7 @@ const AllUpcoming = () => {
             </div>
 
             <div className="featured__overlay"></div>
-          </div>
+          </Link>
         ))}
       </div>
 

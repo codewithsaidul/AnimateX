@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const CategorySearch = ({ genre, genres }) => {
   const genreId = genres.find((cat) => cat.name === genre);
@@ -16,7 +17,6 @@ const CategorySearch = ({ genre, genres }) => {
       );
       return data.results;
     },
-    // refetchInterval: 600000 // 600000 milliseconds = 1 hour
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -24,13 +24,20 @@ const CategorySearch = ({ genre, genres }) => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h2 className="section__title"><span className="text-white">Category : </span>{genre}</h2>
+        <h2 className="section__title">
+          <span className="text-white">Category : </span>
+          {genre}
+        </h2>
       </div>
 
       {/* ================= Category Container ================== */}
       <div className="latest__movies-container mt-8">
         {movies.slice(0, 12).map((movie) => (
-          <div key={movie.id} className="latest__movie relative shadow-lift">
+          <Link
+            to={`/movie/${encodeURI(movie.title || movie.name)}`}
+            key={movie.id}
+            className="latest__movie relative shadow-lift"
+          >
             <div>
               <img
                 src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
@@ -41,8 +48,12 @@ const CategorySearch = ({ genre, genres }) => {
             </div>
             <div className="latest__movie-content">
               <h3>
-                {movie.title} ({movie.release_date.substring(0, 4)}) Dual Audio
-                [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p | GDRive
+                {movie.title || movie.name} (
+                {movie.release_date
+                  ? movie.release_date.substring(0, 4)
+                  : movie.first_air_date?.substring(0, 4)}
+                ) Dual Audio [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p |
+                GDRive
               </h3>
               <p className="text-sm text-normalText">
                 {new Date(movie.release_date).toLocaleDateString("en-US", {
@@ -63,7 +74,7 @@ const CategorySearch = ({ genre, genres }) => {
             </div>
 
             <div className="featured__overlay"></div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

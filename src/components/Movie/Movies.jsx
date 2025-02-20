@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaStar } from "react-icons/fa";
 import Pagination from "./Pagination";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Movies = () => {
   const [currentPage, setCurrentPage] = useState(1); // Track current page
@@ -58,7 +59,7 @@ const Movies = () => {
       {/* ================= Latest Movies Container ================== */}
       <div className="latest__movies-container mt-8">
         {data?.movies.map((movie) => (
-          <div key={movie.id} className="latest__movie relative shadow-lift">
+          <Link to={`/movie/${encodeURIComponent(movie.title || movie.name)}`} key={movie.id} className="latest__movie relative shadow-lift">
             <div>
               <img
                 src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
@@ -91,7 +92,7 @@ const Movies = () => {
             </div>
 
             <div className="featured__overlay"></div>
-          </div>
+          </Link>
         ))}
       </div>
 

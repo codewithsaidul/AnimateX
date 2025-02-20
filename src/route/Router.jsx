@@ -44,10 +44,9 @@ const router = createBrowserRouter([
           const movieNam = decodeURIComponent(params.movieName); // ✅ Encode for URL Safety
           const apiUrl = `${
               import.meta.env.VITE_BASE_URL
-            }/search/movie?query=${movieNam}&api_key=${
+            }/search/multi?query=${movieNam}&api_key=${
               import.meta.env.VITE_API_KEY
-            }&append_to_response=images,videos,credits`
-            console.log(apiUrl)
+            }`
           return fetch(apiUrl)
         },
       },

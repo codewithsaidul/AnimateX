@@ -35,7 +35,7 @@ const CategoryPage = () => {
       </div>
 
       <div className="min-h-screen w-full lg:w-[25%] px-6">
-        {/* <UpComingMovies /> */}
+        <UpComingMovies />
         <Genre />
       </div>
     </div>
