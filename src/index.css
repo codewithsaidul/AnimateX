@@ -60,7 +60,7 @@
   }
 
   .nav__list {
-    @apply flex items-center gap-6;
+    @apply flex items-center gap-6 max-[839px]:hidden;
   }
 
   .nav__list .nav__item {
