@@ -18,6 +18,11 @@ const Search = ({ movies, searchName }) => {
     }
   };
 
+  const filteredMovies = movies.flatMap(movie =>
+    movie.media_type === "person" ? movie.known_for : movie
+  );
+  
+
   return (
     <div className="mt-10 px-6">
       <form onSubmit={handleSearch} className="mb-12">
@@ -35,8 +40,8 @@ const Search = ({ movies, searchName }) => {
 
       {/* ================ Upcoming Movies Container ================= */}
       <div className="search__container ">
-        {movies.length > 0 ? (
-          movies.map((movie, index) => (
+        {filteredMovies.length > 0 ? (
+          filteredMovies.map((movie, index) => (
             <div key={index} className="search__movie">
               <img
                 src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
@@ -52,7 +57,9 @@ const Search = ({ movies, searchName }) => {
                   {movie.title || movie.name} (
                   {movie.release_date
                     ? movie.release_date.substring(0, 4)
-                    : movie.first_air_date?.substring(0, 4)}
+                    : movie.first_air_date
+                    ? movie.first_air_date.substring(0, 4)
+                    : "N/A"}
                   ) Dual Audio [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p
                   | GDRive
                 </Link>
@@ -60,7 +67,13 @@ const Search = ({ movies, searchName }) => {
                   {movie.overview.substring(0, 150)}
                 </p>
                 <p className="text-white text-sm">
-                  {new Date(movie.release_date || movie.first_air_date).toLocaleDateString("en-US", {
+                  {new Date(
+                    movie.release_date
+                      ? movie.release_date.substring(0, 4)
+                      : movie.first_air_date
+                      ? movie.first_air_date.substring(0, 4)
+                      : "N/A"
+                  ).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "short",
                     day: "numeric",

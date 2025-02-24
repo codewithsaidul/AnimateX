@@ -71,7 +71,7 @@ const Hero = () => {
                   src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
                   alt={movie.title}
                   loading="lazy"
-                  className={`w-full h-96 rounded-xl shadow-lg transition-transform transform}`}
+                  className={`w-full h-96 rounded-xl shadow-lg transition-transform transform aspect-auto}`}
                 />
               </div>
               <div className="absolute bottom-8 left-0 w-full h-16 px-4 py-2">
