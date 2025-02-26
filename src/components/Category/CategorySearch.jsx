@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import useLoading from "../hook/useLoading";
 
 const CategorySearch = ({ genre, genres }) => {
+  const { setLoading } = useLoading();
   const genreId = genres.find((cat) => cat.name === genre);
 
   const { data: movies = [], isLoading } = useQuery({
@@ -15,11 +18,14 @@ const CategorySearch = ({ genre, genres }) => {
           import.meta.env.VITE_API_KEY
         }&with_genres=${genreId?.id}`
       );
+      setLoading(false)
       return data.results;
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    setLoading(isLoading)
+  }, [isLoading, setLoading])
 
   return (
     <div>

@@ -5,8 +5,10 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Pagination from "../Movie/Pagination";
 import { useEffect, useState } from "react";
+import useLoading from "../hook/useLoading";
 
 const TvWebSeries = ({ cusClass, pagClass }) => {
+  const { setLoading } = useLoading()
   const [currentPage, setCurrentPage] = useState(1); // Track current page
 
   const { data, isLoading, refetch } = useQuery({
@@ -17,6 +19,7 @@ const TvWebSeries = ({ cusClass, pagClass }) => {
           import.meta.env.VITE_API_KEY
         }&page=${currentPage}`
       );
+      setLoading(false);
       return {
         movies: data.results,
         total_pages: data.total_pages,
@@ -46,14 +49,16 @@ const TvWebSeries = ({ cusClass, pagClass }) => {
     };
   }, [currentPage, refetch]);
 
-  if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    setLoading(isLoading)
+  }, [isLoading, setLoading])
 
   return (
     <div className="my-12 px-6">
       <div className="flex justify-between items-center">
         <h2 className="section__title">TV & Web Series</h2>
         <Link
-          to="/tv-web-series"
+          to="/genres/tv-web-series"
           className={`text-base text-white ${cusClass}`}
         >
           See All

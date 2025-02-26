@@ -5,9 +5,12 @@ import UpComingMovies from "../components/Home/UpComingMovies";
 import Genre from "../components/Home/Genre";
 import MovieDetails from "../components/Single/MovieDetails";
 import SimilarTitles from "../components/Single/SimilarTitles";
+import { useEffect } from "react";
+import useLoading from "../components/hook/useLoading";
 
 const SingleMovie = () => {
   const movies = useLoaderData();
+  const { setLoading } = useLoading()
   const movieId = movies.results[0].id;
 
   const { data: movie = [], isLoading } = useQuery({
@@ -32,6 +35,7 @@ const SingleMovie = () => {
       }
 
       const { data } = await axios.get(url);
+      setLoading(false);
       return data;
     },
     enabled: !!movieId,
@@ -41,7 +45,9 @@ const SingleMovie = () => {
     ? "movie"
     : "tv";
 
-  if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading, setLoading]);
 
   return (
     <div className="pt-16 flex flex-col lg:flex-row gap-6">

@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import useLoading from "../hook/useLoading";
 
 const Genre = () => {
-
+  const { setLoading } = useLoading()
 
   const { data: genres = [], isLoading } = useQuery({
     queryKey: ["genres"],
@@ -14,6 +16,7 @@ const Genre = () => {
             import.meta.env.VITE_API_KEY
           }`
         );
+        setLoading(false)
         return data.genres;
       } catch (error) {
         console.error("Error fetching animes:", error.message);
@@ -24,7 +27,9 @@ const Genre = () => {
 
 
 
-  if (isLoading) return <div>Loading....</div>;
+  useEffect(() => {
+    setLoading(isLoading)
+  }, [isLoading, setLoading])
 
   return (
     <div className="mt-12">

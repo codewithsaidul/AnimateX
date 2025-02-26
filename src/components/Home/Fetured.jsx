@@ -5,8 +5,13 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useEffect } from "react";
+import useLoading from "../hook/useLoading";
 
 const Fetured = () => {
+
+  const { setLoading } = useLoading();
+
   const { data: movies = [], isLoading } = useQuery({
     queryKey: ["movies"],
     queryFn: async () => {
@@ -15,12 +20,16 @@ const Fetured = () => {
           import.meta.env.VITE_API_KEY
         }`
       );
+      setLoading(false)
       return data.results;
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    setLoading(isLoading)
+  }, [isLoading, setLoading])
 
+  
   return (
     <div className="my-10 px-6">
       <div className="flex justify-between items-center mb-8">

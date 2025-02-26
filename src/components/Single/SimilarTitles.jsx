@@ -5,8 +5,13 @@ import { Autoplay, Navigation } from "swiper/modules";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
+import useLoading from "../hook/useLoading";
 
 const SimilarTitles = ({ movieId, mediaType }) => {
+
+  const { setLoading }  = useLoading()
+
   const { data: movies = [], isLoading } = useQuery({
     queryKey: ["similarMovies", movieId],
     queryFn: async () => {
@@ -42,11 +47,14 @@ const SimilarTitles = ({ movieId, mediaType }) => {
             ) >= 2010)
       );
 
+      setLoading(false);
       return filteredMovies;
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    setLoading(isLoading)
+  }, [isLoading, setLoading])
 
   return (
     <div className="my-10 px-6">

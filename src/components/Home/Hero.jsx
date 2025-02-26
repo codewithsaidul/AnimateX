@@ -8,13 +8,14 @@ import "swiper/css/navigation";
 // import required modules
 import { Autoplay } from "swiper/modules";
 import axios from "axios";
-// import { useState } from 'react';
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useLoading from "../hook/useLoading";
 
 const Hero = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { setLoading } = useLoading();
 
   const { data: movies = [], isLoading } = useQuery({
     queryKey: ["movies"],
@@ -25,6 +26,7 @@ const Hero = () => {
             import.meta.env.VITE_API_KEY
           }`
         );
+        setLoading(false)
         return data.results;
       } catch (error) {
         console.error("Error fetching movies:", error.message);
@@ -33,7 +35,9 @@ const Hero = () => {
     },
   });
 
-  if (isLoading) return <div>Loading....</div>;
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading, setLoading]);
 
   return (
     <div className="px-6 py-5">
@@ -65,7 +69,9 @@ const Hero = () => {
       >
         {movies.map((movie) => (
           <SwiperSlide key={movie.id}>
-            <Link to={`/movie/${encodeURIComponent(movie.title || movie.name)}`}>
+            <Link
+              to={`/movie/${encodeURIComponent(movie.title || movie.name)}`}
+            >
               <div className="relative">
                 <img
                   src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
@@ -80,18 +86,18 @@ const Hero = () => {
                   {movie.release_date
                     ? movie.release_date.substring(0, 4)
                     : movie.first_air_date?.substring(0, 4)}
-                  ) Dual Audio [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p |
-                  GDRive
+                  ) Dual Audio [Hindi ORG & Malayalam] WEB-DL 480p, 720p & 1080p
+                  | GDRive
                 </h2>
                 <p className="text-base text-normalText mt-10">
                   {movie.release_date.substring(0, 4)}
                 </p>
               </div>
-  
+
               <div className="hero__tag">
                 <p className="hero__tag-title">Movie</p>
               </div>
-  
+
               <div className="hero__overlay"></div>
             </Link>
           </SwiperSlide>

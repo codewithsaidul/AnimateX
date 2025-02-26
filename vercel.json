@@ -4,6 +4,9 @@
     { "source": "/genres/tv-web-series", "destination": "/" },
     { "source": "/upcoming", "destination": "/" },
     { "source": "/search", "destination": "/" },
-    { "source": "/genre/:genre", "destination": "/" }
+    { "source": "/genre/:genre", "destination": "/" },
+    { "source": "/movie/:id", "destination": "/" }, 
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
+

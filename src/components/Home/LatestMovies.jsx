@@ -2,11 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import useLoading from "../hook/useLoading";
 
 const LatestMovies = () => {
 
+  const { setLoading } = useLoading()
 
-  const { data: movies = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["latestMovies"],
     queryFn: async () => {
       const { data } = await axios.get(
@@ -14,13 +17,16 @@ const LatestMovies = () => {
           import.meta.env.VITE_API_KEY
         }`
       );
+      setLoading(false)
       return data.results;
     },
-    // refetchInterval: 600000 // 600000 milliseconds = 1 hour
   });
 
+  const movies = data || [];
 
-  if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading, setLoading]);
 
   return (
     <div className="my-12 px-6">
@@ -34,7 +40,11 @@ const LatestMovies = () => {
       {/* ================= Latest Movies Container ================== */}
       <div className="latest__movies-container mt-8">
         {movies.slice(0, 12).map((movie) => (
-          <Link to={`/movie/${encodeURIComponent(movie.title || movie.name)}`} key={movie.id} className="latest__movie relative shadow-lift">
+          <Link
+            to={`/movie/${encodeURIComponent(movie.title || movie.name)}`}
+            key={movie.id}
+            className="latest__movie relative shadow-lift"
+          >
             <div>
               <img
                 src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}

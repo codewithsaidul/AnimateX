@@ -18,10 +18,9 @@ const Search = ({ movies, searchName }) => {
     }
   };
 
-  const filteredMovies = movies.flatMap(movie =>
+  const filteredMovies = movies.flatMap((movie) =>
     movie.media_type === "person" ? movie.known_for : movie
   );
-  
 
   return (
     <div className="mt-10 px-6">
@@ -67,17 +66,22 @@ const Search = ({ movies, searchName }) => {
                   {movie.overview.substring(0, 150)}
                 </p>
                 <p className="text-white text-sm">
-                  {new Date(
-                    movie.release_date
-                      ? movie.release_date.substring(0, 4)
-                      : movie.first_air_date
-                      ? movie.first_air_date.substring(0, 4)
-                      : "N/A"
-                  ).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
+                  {movie.release_date?.trim()
+                    ? new Date(movie.release_date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })
+                    : movie.first_air_date?.trim()
+                    ? new Date(movie.first_air_date).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        }
+                      )
+                    : "N/A"}
                 </p>
                 <p className="text-white text-xs flex items-center gap-1">
                   <FaStar size={14} />

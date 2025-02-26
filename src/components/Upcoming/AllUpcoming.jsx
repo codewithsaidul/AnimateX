@@ -4,8 +4,10 @@ import { FaStar } from "react-icons/fa";
 import Pagination from "../Movie/Pagination";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useLoading from "../hook/useLoading";
 
 const AllUpcoming = () => {
+  const { setLoading } = useLoading()
   const [currentPage, setCurrentPage] = useState(1); // Track current page
 
   const { data, isLoading, refetch } = useQuery({
@@ -23,6 +25,7 @@ const AllUpcoming = () => {
           import.meta.env.VITE_API_KEY
         }&primary_release_date.gte=${tomorrowFormatted}&primary_release_date.lte=${nextMonthFormatted}&sort_by=primary_release_date.asc&page=${currentPage}`
       );
+      setLoading(false);
       return {
         movies: data.results,
         total_pages: data.total_pages,
@@ -51,7 +54,9 @@ const AllUpcoming = () => {
     };
   }, [currentPage, refetch]);
 
-  if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    setLoading(isLoading)
+  }, [isLoading, setLoading])
 
   return (
     <div className="my-12 px-6">

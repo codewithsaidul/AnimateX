@@ -4,9 +4,12 @@ import Genre from "../components/Home/Genre";
 import CategorySearch from "../components/Category/CategorySearch";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import useLoading from "../components/hook/useLoading";
 
 const CategoryPage = () => {
   const { genre } = useParams();
+  const { setLoading } = useLoading()
 
   const { data: genres = [], isLoading } = useQuery({
     queryKey: ["genres"],
@@ -26,7 +29,9 @@ const CategoryPage = () => {
   });
 
 
-  if (isLoading) return <div>Loading...</div>;
+    useEffect(() => {
+      setLoading(isLoading)
+    }, [isLoading, setLoading])
 
   return (
     <div className="pt-28 px-6 flex flex-col lg:flex-row gap-6">

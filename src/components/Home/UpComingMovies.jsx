@@ -3,8 +3,12 @@ import axios from "axios";
 
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import useLoading from "../hook/useLoading";
 
 const UpComingMovies = () => {
+  const { setLoading } = useLoading();
+
   const { data: upcomingMovies = [], isLoading } = useQuery({
     queryKey: ["upcomingMovies"],
     queryFn: async () => {
@@ -22,7 +26,7 @@ const UpComingMovies = () => {
             import.meta.env.VITE_API_KEY
           }&primary_release_date.gte=${tomorrowFormatted}&primary_release_date.lte=${nextMonthFormatted}&sort_by=primary_release_date.asc`
         );
-
+        setLoading(false);
         return data.results; // ✅ Returns upcoming movies
       } catch (error) {
         console.error("Error fetching upcoming movies:", error.message);
@@ -31,7 +35,9 @@ const UpComingMovies = () => {
     },
   });
 
-  if (isLoading) return <div>Loading....</div>;
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading, setLoading]);
 
   return (
     <div>

@@ -4,9 +4,11 @@ import { useSearchParams } from "react-router-dom";
 import Search from "../components/Search/Search";
 import Genre from "../components/Home/Genre";
 import { useEffect } from "react";
+import useLoading from "../components/hook/useLoading";
 
 const SearchMovie = () => {
   const [searchParams] = useSearchParams();
+  const { setLoading } = useLoading()
   const query = searchParams.get("query") || "";
 
   const { data: movies = [], isLoading, refetch } = useQuery({
@@ -17,18 +19,22 @@ const SearchMovie = () => {
           import.meta.env.VITE_API_KEY
         }&query=${query}`
       );
+
+      setLoading(false)
       return data.results;
     },
   });
 
 
   useEffect(() => {
+    setLoading(isLoading)
+  }, [isLoading, setLoading])
+
+  useEffect(() => {
     if (query) refetch(); // Query change hole refetch()
   }, [query, refetch]);
 
 
-
-  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="pt-16 flex flex-col lg:flex-row gap-6">
